@@ -1,68 +1,61 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@import "tailwindcss";
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@theme {
+  --color-primary: #8cc740;
+  --color-secondary: #00c0f3;
+  --color-dark: #030712;
+  --color-light: #f0f4f8;
 }
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+.loader_under_construction_up,
+.loader_under_construction_down {
+  height: 25vh;
+  aspect-ratio: 1.8;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-color: #030712;
+  background-position: bottom;
+  animation: l8 7s infinite steps(7);
+  position: relative; /* for ::after positioning */
+  overflow: hidden;
 }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+/* shared rim outline */
+.loader_under_construction_up::after,
+.loader_under_construction_down::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px solid #222; /* rim color */
+  border-radius: 50%;
+  box-shadow: 0 0 10px #8cc74066 inset, 0 0 10px #00c0f366; /* glow effect */
+  pointer-events: none;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* TOP — drains */
+.loader_under_construction_up {
+  -webkit-mask: linear-gradient(0deg, #000 55%, #0000 0) top/100% 18.18%;
+  background-image: linear-gradient(#8cc740 0 0);
+  background-size: 100% 0%;
+  animation-direction: reverse;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+/* BOTTOM — fills */
+.loader_under_construction_down {
+  -webkit-mask: linear-gradient(0deg, #000 55%, #0000 0) bottom/100% 18.18%;
+  background-image: linear-gradient(#00c0f3 0 0);
+  background-size: 100% 0%;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+/* animation */
+@keyframes l8 {
+  100% {
+    background-size: 100% 115%;
   }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
+}
+
+@media (max-width: 1024px) {
+  .loader_under_construction_up,
+  .loader_under_construction_down {
+    height: 20vh;
   }
 }
